@@ -1,0 +1,81 @@
+global !p
+import re
+def item(arr_name):
+    item = arr_name.lstrip('$@')
+    ematch = re.search("([A-Za-z][A-Za-z0-9_]+?)s?[^A-Za-z0-9_]*?$", item)
+    try:
+        wmatch = re.search("([A-Za-z][A-Za-z0-9_]+)$", ematch.group(1))
+        return wmatch.group(1).lower()
+    except:
+        return 'element'
+endglobal
+
+snippet ife "if ___ else" !
+if (${1:true}) {
+  ${2}
+} else{
+
+};
+endsnippet
+
+snippet if "if" !
+if (${1:true}) {
+  ${2}
+};
+endsnippet
+
+# node.js
+
+snippet log "console log" !
+console.log($0)
+endsnippet
+
+snippet ldir "console dir" !
+console.dir($0)
+endsnippet
+
+snippet fun "Function" !b
+var ${1:function_name} = function(${2:args}) {
+    ${0:// body...}
+}
+endsnippet
+
+snippet afun "anon function "
+function (${1:err}, ${2:callback}) {
+    ${0:// body...}
+}
+endsnippet
+
+snippet asyncfs "Async.forEachSeries "
+Async.forEachSeries(${1:items}, function ($2, next_${2:`!p snip.rv = item(t[1])`}) {
+    $0
+}, ${3:next});
+endsnippet
+
+snippet asyncf "Async.forEach "
+Async.forEach(${1:items}, function ($2, next_${2:`!p snip.rv = item(t[1])`}) {
+    $0
+}, ${3:next});
+endsnippet
+
+snippet "([^ \t]+)\.asyncfs" "Async.forEachSerias" !r
+Async.forEachSeries(`!p snip.rv=match.group(1)`, function ($1, next_${1:`!p	snip.rv = item(match.group(1))`}) {
+    $0
+}, ${2:next});
+endsnippet
+
+snippet "([^ \t]+)\.asyncf" "Async.forEach" !r
+Async.forEach(`!p snip.rv=match.group(1)`, function ($1, next_${1:`!p	snip.rv = item(match.group(1))`}) {
+    $0
+}, ${2:next});
+endsnippet
+
+snippet cbe "Callback with err" !
+${1:callback}(${2:err}$0);
+endsnippet
+
+snippet eif "if (err) {cb(err)}" !
+if (${1:err}){
+  ${2:callback}($1);
+}$0
+endsnippet
