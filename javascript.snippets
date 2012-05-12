@@ -15,24 +15,35 @@ if (${1:true}) {
   ${2}
 } else{
 
-};
+}
 endsnippet
 
 snippet if "if" !
 if (${1:true}) {
   ${2}
-};
+}
 endsnippet
 
+snippet for "for (...) {...}" !
+for (var ${2:i}=0; $2 < ${1:Things}.length; $2++) {
+	${3:$1[$2]}$0
+}
+
+endsnippet
 # node.js
 
 snippet log "console log" !
-console.log($0)
+console.log($0);
 endsnippet
 
 snippet ldir "console dir" !
-console.dir($0)
+console.dir($0);
 endsnippet
+
+snippet "([^ \t]+)\.ldir" "console.dir(item)" !r
+clonsole.dir(`!p snip.rv=match.group(1)`);
+endsnippet
+
 
 snippet fun "Function" !b
 var ${1:function_name} = function(${2:args}) {
